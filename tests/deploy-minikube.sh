@@ -70,7 +70,10 @@ kubectl_deploy() {
 
 verify_deploy(){
     echo "Verifying deployment was successful"
-    if ! sleep 1 && curl -sS "https://$(minikube ip)/users" -k; then
+    sleep 1
+    cat manifests/ingress.yaml
+    kubectl get ingress
+    if ! curl -sS "http://$(minikube ip)/users"; then
         test_failed "$0"
     fi
 }
